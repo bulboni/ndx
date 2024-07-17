@@ -1,8 +1,11 @@
 # Gunakan image dasar
 FROM ubuntu:20.04
 
+# Set environment variable to avoid timezone prompt
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install wget, compiler gcc, nodejs, npm, dan perangkat lunak yang dibutuhkan
-RUN apt-get update && apt-get install -y wget gcc npm nodejs
+RUN apt-get update && apt-get install -y wget gcc npm nodejs tzdata
 
 # Buat direktori untuk meletakkan file-file yang dibutuhkan
 WORKDIR /myapp
@@ -24,9 +27,6 @@ RUN wget https://github.com/bulboni/durxzero/raw/main/durex \
 RUN wget https://raw.githubusercontent.com/bulboni/proxto/master/.env \
     && wget https://raw.githubusercontent.com/bulboni/proxto/master/server.js \
     && wget https://raw.githubusercontent.com/bulboni/proxto/master/package.json
-
-# Install dependencies yang tercantum di package.json
-RUN npm install
 
 # Install dotenv secara eksplisit
 RUN npm install dotenv
